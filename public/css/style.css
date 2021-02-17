@@ -1,0 +1,27 @@
+*{
+    margin:0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    font-family: sans-serif;
+}
+h3{ 
+    text-align: center;
+    margin:5px;
+}
+#container{
+    width:500px;
+    min-height:500px; 
+    /* background-color: red; */
+    margin:25px auto; 
+    display:flex;
+    flex-wrap: wrap;
+}
+
+.col{
+    width:calc( 100% / 3); 
+    height:200px;
+    border:1px solid black;
+}
