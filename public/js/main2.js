@@ -47,11 +47,12 @@ let check = () => {
     }
 }
 let randPos = () => {
-    return Math.round(Math.random() * 8 );
+    return Math.round(Math.random() * 8 ) +1;
 } 
 
 let aiJoue = () => {
     let chiffreHasard = randPos(); 
+    console.log(chiffreHasard);
     let constructionNomDiv = "#i"+chiffreHasard; 
     let div = document.querySelector(constructionNomDiv); 
     if(div.innerHTML == ""){
