@@ -24,4 +24,8 @@ h3{
     width:calc( 100% / 3); 
     height:200px;
     border:1px solid black;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 10rem;
 }
