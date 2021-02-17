@@ -54,6 +54,7 @@ cols.forEach((e) =>{
         if(enjeu){
             let pos = e.getAttribute('id').substring(1); 
             check();
+            console.log(tabJeu);
             if (joueurAct == true) { 
                 if(e.innerHTML == ""){
                     e.innerHTML = "O";

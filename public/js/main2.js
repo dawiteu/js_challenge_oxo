@@ -1,17 +1,15 @@
 let cols = document.querySelectorAll(".col"); // prend toute les cols en compte
 let jouer = document.querySelector("#joueur"); 
 
-//  condition de joueur
-let joueurAct = false; // X  
-            //=  true; // O 
+joueurAct=false; // c'est un humain qui commence ! ; 
+
+
 let enjeu = true; // on commence le jeu en jouant; 
 
 
 let tabJeu = []; 
 let click = 0
 
-
-//let tabJeu = ["","","","","","","",""]; 
 
 
 const gagneCond = [ //condition de victoire 
@@ -27,7 +25,6 @@ const gagneCond = [ //condition de victoire
 
 
 let check = () => {
-    
     for(let i=0; i <= 7; i++){
         let checkPos = gagneCond[i]; 
         let posA = tabJeu[checkPos[0]];
@@ -35,35 +32,43 @@ let check = () => {
         let posC = tabJeu[checkPos[2]]; 
 
         if(posA != undefined && posB != undefined && posC != undefined){
+            console.log(posA, posB, posC);
             if(posA == posB && posB == posC){
                 console.log('gagné!');
                 jouer.parentElement.innerHTML="On a un gagnant! C'est : "+posC; 
                 enjeu=false; // on sort du jeu; 
-            }else if (click > 8) {
-                enjeu = false 
+                return false;
+            }else if (click > 4) {
+              enjeu = false 
               jouer.parentElement.innerHTML = "match nul !"
-              return false
+              return false;
             }
         }
     }
 }
-let ordi = Math.round(Math.random()*8)
+let randPos = () => {
+    return Math.round(Math.random() * 8 );
+} 
+
+let aiJoue = () => {
+    let chiffreHasard = randPos(); 
+    let constructionNomDiv = "#i"+chiffreHasard; 
+    let div = document.querySelector(constructionNomDiv); 
+    if(div.innerHTML == ""){
+        div.innerHTML = "O";
+        tabJeu[ chiffreHasard-1 ] = "O";
+        check();
+    }else{
+        aiJoue();
+    }
+}
 
 cols.forEach((e) =>{
     e.addEventListener("click", () => { 
         if(enjeu){
-            let pos = e.getAttribute('id').substring(1); 
-            check();
-            if (joueurAct == true) { 
-                if(e.innerHTML == ""){
-                    e.innerHTML = "O";
-                    tabJeu[pos-1] = "O"; 
-                    jouer.innerHTML= "X";
-                    joueurAct=false;
-                    click++
-                    check();
-                }
-            }else{
+            if(!joueurAct){
+                let pos = e.getAttribute('id').substring(1); 
+                check();
                 if(e.innerHTML == ""){
                     e.innerHTML = "X";
                     jouer.innerHTML= "O";
@@ -71,8 +76,18 @@ cols.forEach((e) =>{
                     joueurAct=true; 
                     click++
                     check();
-                }
-            }     
+                    if(enjeu){
+                        let timer; 
+                        timer = setTimeout( () => { 
+                            jouer.innerHTML = "X";
+                            aiJoue();
+                            joueurAct=false;
+                            clearTimeout(timer); 
+                        }, 2000);
+                    }
+                }                   
+            }
+
         }
     });
 })
