@@ -1,18 +1,20 @@
-let cols = document.querySelectorAll(".col"); 
+let cols = document.querySelectorAll(".col"); // prend toute les cols en compte
 let jouer = document.querySelector("#joueur"); 
 
+//  condition de joueur
 let joueurAct = false; // X  
             //=  true; // O 
 let enjeu = true; // on commence le jeu en jouant; 
 
 
 let tabJeu = []; 
+let click = 0
 
 
 //let tabJeu = ["","","","","","","",""]; 
 
 
-const gagneCond = [ 
+const gagneCond = [ //condition de victoire 
         [0, 1, 2], 
         [3, 4, 5], 
         [6, 7, 8],
@@ -37,6 +39,10 @@ let check = () => {
                 console.log('gagné!');
                 jouer.parentElement.innerHTML="On a un gagnant! C'est : "+posC; 
                 enjeu=false; // on sort du jeu; 
+            }else if (click > 8) {
+                enjeu = false 
+              jouer.parentElement.innerHTML = "match nul !"
+              return false
             }
         }
     }
@@ -54,6 +60,7 @@ cols.forEach((e) =>{
                     tabJeu[pos-1] = "O"; 
                     jouer.innerHTML= "X";
                     joueurAct=false;
+                    click++
                     check();
                 }
             }else{
@@ -62,6 +69,7 @@ cols.forEach((e) =>{
                     jouer.innerHTML= "O";
                     tabJeu[pos-1] = "X"; 
                     joueurAct=true; 
+                    click++
                     check();
                 }
             }     
